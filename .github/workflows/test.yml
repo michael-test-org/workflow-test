@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check access
-        if: ${{ github.event.author_association != 'COLLABORATOR' && github.event.author_association != 'OWNER' && !contains(github.event.*.labels.*.name, 'ci:run-tests') }}
+        if: ${{ github.event.pull_request.author_association != 'COLLABORATOR' && github.event.pull_request.author_association != 'OWNER' && !contains(github.event.*.labels.*.name, 'ci:run-tests') }}
         run: |
           echo "Event not triggered by a collaborator. Please add the ci:run-tests label to trigger this workflow with the correct permissions"
-          echo "Found association: ${{ github.event.author_association }}"
+          echo "Found association: ${{ github.event.pull_request.author_association }}"
           exit 1
 
       - name: Checkout code
