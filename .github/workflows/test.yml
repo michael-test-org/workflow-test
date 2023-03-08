@@ -1,0 +1,14 @@
+name: Demo
+on: pull_request
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test
+        run: |
+          if [[ "x${{ secrets.MY_SECRET }}" -== "xval"]]; then
+            echo "Access to secrets"
+          else
+            echo "No access to secrets"
+            exit 1
+          fi
