@@ -1,3 +1,3 @@
 # workflow-test
 
-Change in repo - access to secrets
+Change in repo - no access to secrets
