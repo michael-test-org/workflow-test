@@ -1,0 +1,23 @@
+name: Demo
+on:
+  pull_request:
+    types: [opened, synchronize, labeled]
+  pull_request_target:
+    types: [opened, synchronize]
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test
+        if: ${{ github.event.action == 'opened' || github.event.action == 'synchronize' || contains(github.event.*.labels.*.name, 'ci:run-tests') }}
+        run: |
+          if [[ "x${{ secrets.MY_SECRET }}" == "xval" ]]; then
+            echo "Access to secrets"
+          else
+            echo "No access to secrets"
+            exit 1
+          fi
+      - uses: actions-ecosystem/action-remove-labels@v1
+        if: ${{ contains(github.event.*.labels.*.name, 'ci:run-tests') }}
+        with:
+          labels: ci:run-tests
